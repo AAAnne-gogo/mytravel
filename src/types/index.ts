@@ -47,11 +47,11 @@ export const COVER_IMAGES = [
   'https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80',
 ];
 
-export const CATEGORY_CONFIG: Record<ActivityCategory, { label: string; color: string }> = {
-  transport: { label: '交通', color: 'bg-blue-100 text-blue-700' },
-  food: { label: '餐饮', color: 'bg-orange-100 text-orange-700' },
-  accommodation: { label: '住宿', color: 'bg-purple-100 text-purple-700' },
-  attraction: { label: '景点', color: 'bg-green-100 text-green-700' },
-  shopping: { label: '购物', color: 'bg-pink-100 text-pink-700' },
-  other: { label: '其他', color: 'bg-gray-100 text-gray-700' },
+export const CATEGORY_CONFIG: Record<ActivityCategory, { label: string; icon: string; gradient: string; bg: string }> = {
+  transport: { label: '交通', icon: '🚄', gradient: 'from-blue-500 to-cyan-400', bg: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
+  food: { label: '餐饮', icon: '🍜', gradient: 'from-orange-500 to-amber-400', bg: 'bg-orange-500/10 text-orange-400 border-orange-500/20' },
+  accommodation: { label: '住宿', icon: '🏨', gradient: 'from-purple-500 to-violet-400', bg: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
+  attraction: { label: '景点', icon: '🏛️', gradient: 'from-emerald-500 to-teal-400', bg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
+  shopping: { label: '购物', icon: '🛍️', gradient: 'from-pink-500 to-rose-400', bg: 'bg-pink-500/10 text-pink-400 border-pink-500/20' },
+  other: { label: '其他', icon: '📌', gradient: 'from-slate-500 to-gray-400', bg: 'bg-slate-500/10 text-slate-400 border-slate-500/20' },
 };

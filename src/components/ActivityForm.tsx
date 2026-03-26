@@ -31,93 +31,90 @@ export default function ActivityForm({ onSubmit, onCancel, initial }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm space-y-3">
+    <form onSubmit={handleSubmit} className="glass-card rounded-xl p-5 space-y-4 animate-scale-in">
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-semibold text-gray-700">
+        <h4 className="text-sm font-semibold text-white/80">
           {initial ? '编辑活动' : '添加活动'}
         </h4>
-        <button type="button" onClick={onCancel} className="p-1 hover:bg-gray-100 rounded-lg transition-colors">
-          <X className="w-4 h-4 text-gray-400" />
+        <button type="button" onClick={onCancel} className="p-1.5 hover:bg-white/5 rounded-lg transition-colors">
+          <X className="w-4 h-4 text-white/30" />
         </button>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs text-gray-500 mb-1">时间</label>
+          <label className="block text-xs text-white/30 mb-1.5">时间</label>
           <input
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+            className="input-dark w-full px-3 py-2.5 text-sm rounded-lg"
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-500 mb-1">类别</label>
+          <label className="block text-xs text-white/30 mb-1.5">类别</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value as ActivityCategory)}
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent bg-white"
+            className="input-dark w-full px-3 py-2.5 text-sm rounded-lg"
           >
             {Object.entries(CATEGORY_CONFIG).map(([key, cfg]) => (
-              <option key={key} value={key}>{cfg.label}</option>
+              <option key={key} value={key}>{cfg.icon} {cfg.label}</option>
             ))}
           </select>
         </div>
       </div>
 
       <div>
-        <label className="block text-xs text-gray-500 mb-1">活动名称 *</label>
+        <label className="block text-xs text-white/30 mb-1.5">活动名称 *</label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="例如：参观故宫"
           required
-          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+          className="input-dark w-full px-3 py-2.5 text-sm rounded-lg"
         />
       </div>
 
       <div>
-        <label className="block text-xs text-gray-500 mb-1">地点</label>
+        <label className="block text-xs text-white/30 mb-1.5">地点</label>
         <input
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           placeholder="例如：北京市东城区"
-          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+          className="input-dark w-full px-3 py-2.5 text-sm rounded-lg"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs text-gray-500 mb-1">费用</label>
+          <label className="block text-xs text-white/30 mb-1.5">费用</label>
           <input
             type="number"
             value={cost}
             onChange={(e) => setCost(e.target.value)}
             min="0"
             step="0.01"
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+            className="input-dark w-full px-3 py-2.5 text-sm rounded-lg"
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-500 mb-1">备注</label>
+          <label className="block text-xs text-white/30 mb-1.5">备注</label>
           <input
             type="text"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="可选"
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+            className="input-dark w-full px-3 py-2.5 text-sm rounded-lg"
           />
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="w-full flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-sm font-medium rounded-lg hover:from-primary-600 hover:to-primary-700 shadow-sm hover:shadow transition-all active:scale-[0.98]"
-      >
+      <button type="submit" className="btn-primary w-full flex items-center justify-center gap-2 py-2.5 text-sm rounded-xl">
         <Plus className="w-4 h-4" />
-        {initial ? '保存修改' : '添加'}
+        {initial ? '保存修改' : '添加活动'}
       </button>
     </form>
   );

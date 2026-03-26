@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles, Check } from 'lucide-react';
 import { useTripStore } from '../store/useTripStore';
 import { COVER_IMAGES } from '../types';
 
@@ -20,7 +20,6 @@ export default function CreateTrip() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !destination.trim() || !startDate || !endDate) return;
-
     const id = addTrip({
       title: title.trim(),
       destination: destination.trim(),
@@ -35,142 +34,145 @@ export default function CreateTrip() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
+    <div className="max-w-2xl mx-auto px-5 sm:px-8 py-10">
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 transition-colors mb-6"
+        className="flex items-center gap-2 text-sm text-white/30 hover:text-white/60 transition-colors mb-8"
       >
         <ArrowLeft className="w-4 h-4" />
         返回
       </button>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="relative h-48 overflow-hidden">
+      <div className="glass-card rounded-3xl overflow-hidden animate-scale-in">
+        {/* Cover Preview */}
+        <div className="relative h-52 overflow-hidden">
           <img
             src={COVER_IMAGES[coverIndex]}
             alt="封面"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-all duration-500"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-          <div className="absolute bottom-4 left-5">
-            <h2 className="text-white text-xl font-bold drop-shadow-md flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
-              创建新旅行
-            </h2>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f1a] via-[#0f0f1a]/30 to-transparent" />
+          <div className="absolute bottom-5 left-6 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-warm-400" />
+            <h2 className="text-white text-xl font-bold drop-shadow-lg">创建新旅行</h2>
           </div>
         </div>
 
-        <div className="p-5 sm:p-6">
-          <div className="mb-5">
-            <label className="block text-xs font-medium text-gray-500 mb-2">选择封面</label>
-            <div className="flex gap-2 overflow-x-auto pb-2">
+        <div className="p-6 sm:p-8 space-y-6">
+          {/* Cover Selection */}
+          <div>
+            <label className="block text-xs font-medium text-white/40 mb-3 uppercase tracking-wider">选择封面</label>
+            <div className="flex gap-2.5 overflow-x-auto pb-2">
               {COVER_IMAGES.map((img, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => setCoverIndex(i)}
-                  className={`flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
-                    i === coverIndex ? 'border-primary-500 ring-2 ring-primary-200' : 'border-transparent opacity-60 hover:opacity-100'
+                  className={`relative flex-shrink-0 w-20 h-14 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                    i === coverIndex
+                      ? 'border-primary-400 shadow-lg shadow-primary-500/30 scale-105'
+                      : 'border-transparent opacity-50 hover:opacity-80'
                   }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
+                  {i === coverIndex && (
+                    <div className="absolute inset-0 bg-primary-500/20 flex items-center justify-center">
+                      <Check className="w-4 h-4 text-white" />
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">旅行名称 *</label>
+              <label className="block text-xs font-medium text-white/40 mb-2">旅行名称 *</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="例如：东京五日游"
                 required
-                className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+                className="input-dark w-full px-4 py-3 text-sm rounded-xl"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">目的地 *</label>
+              <label className="block text-xs font-medium text-white/40 mb-2">目的地 *</label>
               <input
                 type="text"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
                 placeholder="例如：日本东京"
                 required
-                className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+                className="input-dark w-full px-4 py-3 text-sm rounded-xl"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">出发日期 *</label>
+                <label className="block text-xs font-medium text-white/40 mb-2">出发日期 *</label>
                 <input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
                   required
-                  className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+                  className="input-dark w-full px-4 py-3 text-sm rounded-xl"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">返回日期 *</label>
+                <label className="block text-xs font-medium text-white/40 mb-2">返回日期 *</label>
                 <input
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                   min={startDate}
                   required
-                  className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+                  className="input-dark w-full px-4 py-3 text-sm rounded-xl"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="col-span-1">
-                <label className="block text-xs font-medium text-gray-500 mb-1">币种</label>
+              <div>
+                <label className="block text-xs font-medium text-white/40 mb-2">币种</label>
                 <select
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value)}
-                  className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent bg-white"
+                  className="input-dark w-full px-4 py-3 text-sm rounded-xl"
                 >
                   <option value="¥">¥ 人民币</option>
                   <option value="$">$ 美元</option>
                   <option value="€">€ 欧元</option>
                   <option value="£">£ 英镑</option>
-                  <option value="¥">¥ 日元</option>
                 </select>
               </div>
               <div className="col-span-2">
-                <label className="block text-xs font-medium text-gray-500 mb-1">总预算</label>
+                <label className="block text-xs font-medium text-white/40 mb-2">总预算</label>
                 <input
                   type="number"
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
                   min="0"
                   step="100"
-                  className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent"
+                  className="input-dark w-full px-4 py-3 text-sm rounded-xl"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">备注</label>
+              <label className="block text-xs font-medium text-white/40 mb-2">备注</label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="旅行的特别安排或注意事项..."
                 rows={3}
-                className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent resize-none"
+                className="input-dark w-full px-4 py-3 text-sm rounded-xl resize-none"
               />
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-medium rounded-xl shadow-md hover:shadow-lg hover:from-primary-600 hover:to-primary-700 transition-all active:scale-[0.98]"
-            >
+            <button type="submit" className="btn-primary w-full py-3.5 rounded-xl text-sm">
               创建旅行计划
             </button>
           </form>

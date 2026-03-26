@@ -1,19 +1,27 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Compass, PlaneTakeoff } from 'lucide-react';
+import { Compass, Plus } from 'lucide-react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-white/80 backdrop-blur-md border-b border-gray-200/60 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+    <div className="min-h-screen flex flex-col relative">
+      {/* Ambient background effects */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-primary-600/8 blur-[120px] animate-glow" />
+        <div className="absolute bottom-[-10%] right-[-5%] w-[400px] h-[400px] rounded-full bg-accent-500/8 blur-[100px] animate-glow" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute top-[40%] right-[20%] w-[300px] h-[300px] rounded-full bg-warm-500/5 blur-[80px] animate-glow" style={{ animationDelay: '3s' }} />
+      </div>
+
+      <header className="glass sticky top-0 z-50 border-b border-white/5">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg shadow-primary-500/20 group-hover:shadow-primary-500/40 transition-all duration-300 group-hover:scale-105">
               <Compass className="w-5 h-5 text-white" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold gradient-text tracking-tight">
               MyTravel
             </span>
           </Link>
@@ -21,19 +29,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {isHome && (
             <Link
               to="/create"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-sm font-medium rounded-xl shadow-md hover:shadow-lg hover:from-primary-600 hover:to-primary-700 transition-all active:scale-[0.97]"
+              className="btn-primary inline-flex items-center gap-2 px-5 py-2.5 text-sm rounded-xl"
             >
-              <PlaneTakeoff className="w-4 h-4" />
+              <Plus className="w-4 h-4" />
               创建旅行
             </Link>
           )}
         </div>
       </header>
 
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 relative">{children}</main>
 
-      <footer className="bg-white/60 backdrop-blur-sm border-t border-gray-200/40 py-6">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center text-sm text-gray-400">
+      <footer className="border-t border-white/5 py-8 mt-12">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 text-center text-sm text-white/20">
           &copy; {new Date().getFullYear()} MyTravel &mdash; 你的个人旅行规划助手
         </div>
       </footer>

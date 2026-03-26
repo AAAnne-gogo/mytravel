@@ -29,9 +29,9 @@ export default function TripDetail() {
 
   if (!trip) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-20 text-center">
-        <p className="text-gray-400 mb-4">找不到该旅行计划</p>
-        <Link to="/" className="text-primary-500 hover:underline text-sm">
+      <div className="max-w-2xl mx-auto px-5 py-20 text-center">
+        <p className="text-white/30 mb-4">找不到该旅行计划</p>
+        <Link to="/" className="text-primary-400 hover:text-primary-300 text-sm transition-colors">
           返回首页
         </Link>
       </div>
@@ -45,36 +45,37 @@ export default function TripDetail() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+    <div className="max-w-5xl mx-auto px-5 sm:px-8 py-8">
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 transition-colors mb-6"
+        className="flex items-center gap-2 text-sm text-white/30 hover:text-white/60 transition-colors mb-8"
       >
         <ArrowLeft className="w-4 h-4" />
         返回
       </button>
 
-      <div className="relative rounded-2xl overflow-hidden mb-8 shadow-md">
+      {/* Hero Banner */}
+      <div className="relative rounded-3xl overflow-hidden mb-8 animate-slide-up">
         <img
           src={trip.coverImage}
           alt={trip.destination}
-          className="w-full h-56 sm:h-64 object-cover"
+          className="w-full h-60 sm:h-72 object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-        <div className="absolute bottom-5 left-6 right-6">
-          <h1 className="text-white text-2xl sm:text-3xl font-bold drop-shadow-lg mb-2">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f1a] via-[#0f0f1a]/50 to-[#0f0f1a]/10" />
+        <div className="absolute bottom-6 left-7 right-7">
+          <h1 className="text-white text-3xl sm:text-4xl font-extrabold drop-shadow-lg mb-3 tracking-tight">
             {trip.title}
           </h1>
-          <div className="flex flex-wrap gap-4 text-white/90 text-sm">
-            <span className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4" />
+          <div className="flex flex-wrap gap-4 text-white/70 text-sm">
+            <span className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+              <MapPin className="w-3.5 h-3.5" />
               {trip.destination}
             </span>
-            <span className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4" />
-              {format(parseISO(trip.startDate), 'yyyy年MM月dd日', { locale: zhCN })} &mdash;{' '}
+            <span className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+              <Calendar className="w-3.5 h-3.5" />
+              {format(parseISO(trip.startDate), 'MM月dd日', { locale: zhCN })} &mdash;{' '}
               {format(parseISO(trip.endDate), 'MM月dd日', { locale: zhCN })}
-              <span className="bg-white/20 px-2 py-0.5 rounded-full text-xs ml-1">
+              <span className="bg-primary-500/30 text-primary-200 px-2 py-0.5 rounded-full text-xs font-bold">
                 {totalDays}天
               </span>
             </span>
@@ -82,16 +83,22 @@ export default function TripDetail() {
         </div>
       </div>
 
+      {/* Notes */}
       {trip.notes && (
-        <div className="bg-warm-50 border border-warm-200 rounded-xl p-4 mb-6 flex gap-3">
+        <div className="glass-card rounded-xl p-4 mb-8 flex gap-3 animate-slide-up stagger-1">
           <StickyNote className="w-5 h-5 text-warm-400 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-warm-700 leading-relaxed">{trip.notes}</p>
+          <p className="text-sm text-warm-200/70 leading-relaxed">{trip.notes}</p>
         </div>
       )}
 
+      {/* Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Day list */}
         <div className="lg:col-span-2 space-y-3">
-          <h2 className="text-lg font-bold text-gray-800 mb-4">每日行程</h2>
+          <h2 className="text-lg font-bold text-white/90 mb-5 flex items-center gap-2 animate-slide-up stagger-1">
+            <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-primary-400 to-accent-400" />
+            每日行程
+          </h2>
           {trip.days.map((day, idx) => {
             const isExpanded = expandedDay === day.id;
             const daySpent = day.activities.reduce((s, a) => s + a.cost, 0);
@@ -99,44 +106,50 @@ export default function TripDetail() {
             return (
               <div
                 key={day.id}
-                className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden"
+                className={`glass-card rounded-2xl overflow-hidden transition-all duration-300 animate-slide-up stagger-${Math.min(idx + 2, 5)}`}
               >
                 <button
                   onClick={() => toggleDay(day.id)}
-                  className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors"
+                  className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/[0.02] transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center text-primary-700 text-sm font-bold">
-                      {idx + 1}
-                    </span>
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500/20 to-primary-500/5 flex items-center justify-center border border-primary-500/20">
+                      <span className="text-primary-300 text-sm font-bold">{idx + 1}</span>
+                    </div>
                     <div className="text-left">
-                      <span className="text-sm font-semibold text-gray-800">
+                      <span className="text-sm font-semibold text-white/85">
                         第{idx + 1}天
                       </span>
-                      <span className="text-xs text-gray-400 ml-2">
+                      <span className="text-xs text-white/25 ml-2">
                         {format(parseISO(day.date), 'MM月dd日 EEEE', { locale: zhCN })}
                       </span>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-gray-400">
-                      {day.activities.length} 项活动
-                      {daySpent > 0 && ` · ${trip.currency} ${daySpent.toLocaleString()}`}
+                    <span className="text-xs text-white/25">
+                      {day.activities.length > 0
+                        ? `${day.activities.length} 项活动`
+                        : '暂无活动'}
+                      {daySpent > 0 && (
+                        <span className="text-primary-300 ml-2 font-medium">
+                          {trip.currency}{daySpent.toLocaleString()}
+                        </span>
+                      )}
                     </span>
                     {isExpanded ? (
-                      <ChevronUp className="w-4 h-4 text-gray-400" />
+                      <ChevronUp className="w-4 h-4 text-white/20" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                      <ChevronDown className="w-4 h-4 text-white/20" />
                     )}
                   </div>
                 </button>
 
                 {isExpanded && (
-                  <div className="px-5 pb-4 space-y-3 border-t border-gray-50">
-                    <div className="pt-3 space-y-2">
+                  <div className="px-5 pb-5 space-y-3 border-t border-white/5 animate-scale-in">
+                    <div className="pt-4 space-y-2">
                       {day.activities.length === 0 && addingToDay !== day.id && (
-                        <p className="text-sm text-gray-300 text-center py-4">
-                          还没有安排活动
+                        <p className="text-sm text-white/15 text-center py-8">
+                          还没有安排活动，点击下方按钮添加
                         </p>
                       )}
                       {day.activities
@@ -163,7 +176,7 @@ export default function TripDetail() {
                     ) : (
                       <button
                         onClick={() => setAddingToDay(day.id)}
-                        className="w-full flex items-center justify-center gap-1.5 py-2.5 text-sm text-primary-500 hover:text-primary-600 hover:bg-primary-50 rounded-lg border border-dashed border-primary-200 transition-colors"
+                        className="w-full flex items-center justify-center gap-2 py-3 text-sm text-primary-400 hover:text-primary-300 hover:bg-primary-500/5 rounded-xl border border-dashed border-primary-500/20 hover:border-primary-500/40 transition-all"
                       >
                         <Plus className="w-4 h-4" />
                         添加活动
@@ -176,7 +189,8 @@ export default function TripDetail() {
           })}
         </div>
 
-        <div className="space-y-4">
+        {/* Budget sidebar */}
+        <div className="space-y-4 animate-slide-up stagger-2">
           <BudgetSummary trip={trip} totalSpent={totalSpent} />
         </div>
       </div>
